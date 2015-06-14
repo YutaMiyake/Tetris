@@ -53,7 +53,6 @@ $(document).ready(function(){
         var B_ACTIVE = 2;
 
         var gtime = 1000;
-        var game;
 
         var STOP = -3;
         var BORDER = -2;
@@ -155,7 +154,7 @@ $(document).ready(function(){
         }
         function setTime(interval)
         {
-          game = clearInterval();
+          clearInterval(game);
           tick(interval);
         }
         
@@ -348,14 +347,17 @@ $(document).ready(function(){
             clearInterval(game);
             showGameOver();
             $(document).unbind();
-            $(document).keypress(function(){
-                $('.gameOver').remove();
-                start();
+            $(document).keypress(function(e){
+                if ( event.which == 13 ) {
+                    $('.gameOver').remove();
+                    start();
+                    event.preventDefault();
+                }
             });   
         }
 
         function showGameOver(){
-            $('.game').append($("<div class = 'gameOver' ></div>").html("GAME OVER"));
+            $('.game').append($("<div class = 'gameOver' ></div>").html("GAME OVER<br><span style='font-size: 20px'>Try again?</span>"));
         }
 
         function showScore(){
@@ -412,7 +414,7 @@ $(document).ready(function(){
                setTime(500); 
             }
             else if(score > 10000){
-               setTime(300); 
+               setTime(400); 
             }
             
         }

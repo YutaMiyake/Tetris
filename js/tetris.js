@@ -52,6 +52,9 @@ $(document).ready(function(){
         var B_OCCUPIED = 1;
         var B_ACTIVE = 2;
 
+        var gtime = 1000;
+        var game;
+
         var STOP = -3;
         var BORDER = -2;
         var MOVE = 100;
@@ -116,7 +119,6 @@ $(document).ready(function(){
         }
               
     // supporting game functions
-        
         function init(){
             field = [ROW];
             for ( var y = 0; y < ROW; y++ )
@@ -144,12 +146,17 @@ $(document).ready(function(){
            showScore();
 
            // game tick
-           tick(1000);
+           tick(gtime);
         }
         function tick(interval){
             game = setInterval(function(){
                 control(KEYS.DOWN);
             },interval);
+        }
+        function setTime(interval)
+        {
+          game = clearInterval();
+          tick(interval);
         }
         
         function clearLine(){
@@ -361,22 +368,22 @@ $(document).ready(function(){
         function calcScore(combo){
             // single
             if (combo === 1){
-                score+=40*bonus;
+                score+=50*bonus;
                 bonus = 1;
             }
             // double
             else if (combo === 2){
-                score+=100*bonus;
+                score+=200*bonus;
                 bonus = 1.5;
             }
             // triple
             else if (combo === 3){
-                score+=300*bonus;
+                score+=1000*bonus;
                 bonus = 2;
             }
             // TETRIS !!
             else if (combo >= 4){
-                score+=1200*bonus;
+                score+=2500*bonus;
                 bonus = 4;
             }
             else{
